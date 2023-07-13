@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="/recursion/1.go">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/sort/bubble.go">
           <value>
             <Attribute>
@@ -18,6 +25,13 @@
           </value>
         </entry>
         <entry key="/sort/insert.go">
+          <value>
+            <Attribute>
+              <option name="separator" value="&#9;" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/sort/merge.go">
           <value>
             <Attribute>
               <option name="separator" value="&#9;" />
