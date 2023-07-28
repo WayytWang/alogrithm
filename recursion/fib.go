@@ -4,12 +4,23 @@ package recursion
 // F(0)=1，F(1)=1, F(n)=F(n - 1)+F(n - 2)（n ≥ 2，n ∈ N*）
 // https://leetcode.cn/problems/fibonacci-number/
 
-func fib(b int) int {
-	if b == 0 {
+func fib(n int) int {
+	cache := make(map[int]int)
+	return f(n, cache)
+}
+
+func f(n int, cache map[int]int) int {
+	if n == 0 {
 		return 0
 	}
-	if b == 1 {
+	if n == 1 {
 		return 1
 	}
-	return fib(b-1) + fib(b-2)
+	result, ok := cache[n]
+	if ok {
+		return result
+	}
+	r := f(n-1, cache) + f(n-2, cache)
+	cache[n] = r
+	return r
 }
