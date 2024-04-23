@@ -250,3 +250,36 @@ func findMiddle(head *ListNode) *ListNode {
 	}
 	return middle
 }
+
+// 给定一个单链表 L 的头节点 head ，单链表 L 表示为： L0 → L1 → … → Ln - 1 → Ln
+// 请将其重新排列后变为： L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+// 不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+func reorderList(head *ListNode) {
+	middle := findMiddle(head)
+	tail := middle.Next
+	middle.Next = nil
+
+	var node *ListNode
+	// 翻转tail列表
+	for tail != nil {
+		node = &ListNode{
+			Val:  tail.Val,
+			Next: node,
+		}
+		tail = tail.Next
+	}
+
+	headCur := head
+	tailCur := node
+
+	for headCur != nil && tailCur != nil {
+		tailNext := tailCur.Next
+		headNext := headCur.Next
+		// tailCur插入headCur之后
+		tailCur.Next = headCur.Next
+		headCur.Next = tailCur
+		tailCur = tailNext
+		headCur = headNext
+	}
+	return
+}

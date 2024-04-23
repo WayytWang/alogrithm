@@ -22,3 +22,4 @@
  - 合并两个有序链表 https://leetcode.cn/problems/merge-two-sorted-lists/description/
  - 分隔链表 https://leetcode.cn/problems/partition-list/description/
  - 排序链表 https://leetcode.cn/problems/sort-list/description/ (多种排序方式)
+ - 重排链表 https://leetcode.cn/problems/reorder-list/description/
