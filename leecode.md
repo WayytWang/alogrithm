@@ -9,7 +9,7 @@
  - 两两交换链表中的节点 https://leetcode.cn/problems/swap-nodes-in-pairs/ (递归 + 非递归)
  - 斐波那契数列 https://leetcode.cn/problems/fibonacci-number/description/ 递归(leecode官方题解都不屑于用递归)
 
-堆
+栈
  - 最小栈 https://leetcode.cn/problems/min-stack/description/
  - 逆波兰表达式求值 https://leetcode.cn/problems/evaluate-reverse-polish-notation/description/
  - 字符串解码 https://leetcode.cn/problems/decode-string/description/ (栈 + DFS)
@@ -23,3 +23,7 @@
  - 分隔链表 https://leetcode.cn/problems/partition-list/description/
  - 排序链表 https://leetcode.cn/problems/sort-list/description/ (多种排序方式)
  - 重排链表 https://leetcode.cn/problems/reorder-list/description/
+ - 环形链表 https://leetcode.cn/problems/linked-list-cycle/description/
+ - 环形链表 II https://leetcode.cn/problems/linked-list-cycle-ii/
+ - 回文链表 https://leetcode.cn/problems/palindrome-linked-list/description/
+ - 随机链表的复制 https://leetcode.cn/problems/copy-list-with-random-pointer/description/

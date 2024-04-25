@@ -327,3 +327,27 @@ func Test_reorderList(t *testing.T) {
 		})
 	}
 }
+
+func Test_copyList(t *testing.T) {
+	type args struct {
+		head *ListNode
+	}
+	tests := []struct {
+		name string
+		args args
+		want *ListNode
+	}{
+		{
+			name: "",
+			args: args{
+				GenByArray([]int{1, 2, 3, 4, 5}),
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := copyList(tt.args.head)
+			t.Log(got)
+		})
+	}
+}
