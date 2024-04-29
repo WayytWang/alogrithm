@@ -209,28 +209,47 @@ func PreOrder(node *BNode) []int {
 	return result
 }
 
+// InOrder 中序遍历
+// 先左，再自己，最后右节点 遍历到左节点后，左节点还有左右节点 深度搜索问题
+// 拿到根节点 最左的路径全部入栈
 func InOrder(node *BNode) []int {
 	result := make([]int, 0)
-	stack := []*BNode{node}
-	for len(stack) > 0 {
-		top := stack[len(stack)-1]
-		left := top
+	stack := make([]*BNode, 0)
+	cur := node
+	for cur != nil || len(stack) > 0 {
+		left := cur
 		for left != nil {
-			stack = append(stack, left.Left)
+			stack = append(stack, left)
 			left = left.Left
 		}
-		top = stack[len(stack)-1]
+		top := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
 		result = append(result, top.Val)
-		if top.Right != nil {
-			stack = append(stack, top.Right)
-		}
+		cur = top.Right
 	}
 	return result
 }
 
 func PostOrder(node *BNode) []int {
-	return nil
+	result := make([]int, 0)
+	cur := node
+	stack := make([]*BNode, 0)
+	var lastVisitedNode *BNode
+	for cur != nil || len(stack) > 0 {
+		for cur != nil {
+			stack = append(stack, cur)
+			cur = cur.Left
+		}
+		top := stack[len(stack)-1]
+		if top.Right == nil || top.Right == lastVisitedNode {
+			result = append(result, top.Val)
+			stack = stack[:len(stack)-1]
+			lastVisitedNode = top
+		} else {
+			cur = top.Right
+		}
+	}
+	return result
 }
 
 type Node struct {
@@ -238,20 +257,54 @@ type Node struct {
 	Neighbors []*Node
 }
 
+// NewGraph [[2,4],[1,3],[2,4],[1,3]]
+func NewGraph(nn [][]int) *Node {
+	var sn *Node
+	nodeMap := make(map[int]*Node)
+	for i := range nn {
+		node := &Node{
+			Val: i + 1,
+		}
+		nodeMap[i+1] = node
+	}
+	for i, ns := range nn {
+		node := nodeMap[i+1]
+		for _, n := range ns {
+			node.Neighbors = append(node.Neighbors, n)
+		}
+
+	}
+	return sn
+}
+
 func cloneGraph(node *Node) *Node {
-	cloneNode := &Node{}
-	//stack := make(*Node, 0)
-	//curNode := node
-	//for curNode != nil {
-	//	newNode := &Node{
-	//		Val: curNode.Val,
-	//	}
-	//	for i := len(curNode.Neighbors) - 1; i > 0; i-- {
-	//
-	//	}
-	//	for i, neighbor := range curNode.Neighbors {
-	//
-	//	}
-	//}
+	if node == nil {
+		return nil
+	}
+	var cloneNode *Node
+	// 原node对应的新node
+	visited := make(map[*Node]*Node)
+	queue := []*Node{node}
+	for len(queue) > 0 {
+		curNode := queue[0]
+		queue = queue[1:]
+		newCurNode := &Node{
+			Val: curNode.Val,
+		}
+		if cloneNode == nil {
+			cloneNode = newCurNode
+		}
+		visited[curNode] = newCurNode
+		for _, neighbor := range curNode.Neighbors {
+			newN := visited[neighbor]
+			if newN == nil {
+				queue = append(queue, neighbor)
+				newN = &Node{
+					Val: neighbor.Val,
+				}
+			}
+			newCurNode.Neighbors = append(newCurNode.Neighbors, newN)
+		}
+	}
 	return cloneNode
 }

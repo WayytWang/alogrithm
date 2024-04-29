@@ -1,6 +1,7 @@
 package stack
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -198,6 +199,58 @@ func TestInOrder(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := InOrder(tt.args.node)
 			t.Log(got)
+		})
+	}
+}
+
+func TestPostOrder(t *testing.T) {
+	type args struct {
+		node *BNode
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "",
+			args: args{
+				node: GenBTByArray([]int{1, 8, 6, 8, 0, 2, 4, 2, 6, 2, 1}),
+			},
+			want: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := PostOrder(tt.args.node)
+			t.Log(got)
+		})
+	}
+}
+
+func TestNewGraph(t *testing.T) {
+	type args struct {
+		nn [][]int
+	}
+	tests := []struct {
+		name string
+		args args
+		want *Node
+	}{
+		{
+			name: "",
+			args: args{
+				// [2,4],[1,3],[2,4],[1,3]
+				nn: [][]int{{2, 4}},
+			},
+			want: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NewGraph(tt.args.nn); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewGraph() = %v, want %v", got, tt.want)
+			}
 		})
 	}
 }
