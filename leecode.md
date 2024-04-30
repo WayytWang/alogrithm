@@ -13,6 +13,10 @@
  - 最小栈 https://leetcode.cn/problems/min-stack/description/
  - 逆波兰表达式求值 https://leetcode.cn/problems/evaluate-reverse-polish-notation/description/
  - 字符串解码 https://leetcode.cn/problems/decode-string/description/ (栈 + DFS)
+ - 克隆图 https://leetcode.cn/problems/clone-graph/description/ (深度优先实现)
+
+队列
+ - 克隆图 https://leetcode.cn/problems/clone-graph/description/ (广度优先实现)
 
 链表
  - 删除排序链表中的重复元素(保留一个重复元素) https://leetcode.cn/problems/remove-duplicates-from-sorted-list/description/

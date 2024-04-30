@@ -259,7 +259,6 @@ type Node struct {
 
 // NewGraph [[2,4],[1,3],[2,4],[1,3]]
 func NewGraph(nn [][]int) *Node {
-	var sn *Node
 	nodeMap := make(map[int]*Node)
 	for i := range nn {
 		node := &Node{
@@ -270,41 +269,83 @@ func NewGraph(nn [][]int) *Node {
 	for i, ns := range nn {
 		node := nodeMap[i+1]
 		for _, n := range ns {
-			node.Neighbors = append(node.Neighbors, n)
+			node.Neighbors = append(node.Neighbors, nodeMap[n])
 		}
 
 	}
-	return sn
+	return nodeMap[1]
 }
 
 func cloneGraph(node *Node) *Node {
 	if node == nil {
 		return nil
 	}
-	var cloneNode *Node
 	// 原node对应的新node
-	visited := make(map[*Node]*Node)
+	visited := map[*Node]*Node{node: {Val: node.Val}}
 	queue := []*Node{node}
 	for len(queue) > 0 {
 		curNode := queue[0]
 		queue = queue[1:]
-		newCurNode := &Node{
-			Val: curNode.Val,
-		}
-		if cloneNode == nil {
-			cloneNode = newCurNode
-		}
-		visited[curNode] = newCurNode
-		for _, neighbor := range curNode.Neighbors {
-			newN := visited[neighbor]
+		for i := range curNode.Neighbors {
+			newN := visited[curNode.Neighbors[i]]
 			if newN == nil {
-				queue = append(queue, neighbor)
-				newN = &Node{
-					Val: neighbor.Val,
-				}
+				queue = append(queue, curNode.Neighbors[i])
+				newN = &Node{Val: curNode.Neighbors[i].Val}
+				visited[curNode.Neighbors[i]] = newN
 			}
-			newCurNode.Neighbors = append(newCurNode.Neighbors, newN)
+			visited[curNode].Neighbors = append(visited[curNode].Neighbors, newN)
 		}
 	}
-	return cloneNode
+	return visited[node]
+}
+
+func cloneGraph2(node *Node) *Node {
+	if node == nil {
+		return nil
+	}
+	visited := make(map[*Node]*Node)
+	return cloneRec(node, visited)
+}
+
+func cloneRec(node *Node, visited map[*Node]*Node) *Node {
+	newNode := &Node{Val: node.Val}
+	visited[node] = newNode
+	for i := range node.Neighbors {
+		newNe, ok := visited[node.Neighbors[i]]
+		if !ok {
+			newNe = cloneRec(node.Neighbors[i], visited)
+		}
+		newNode.Neighbors = append(newNode.Neighbors, newNe)
+	}
+	return newNode
+}
+
+// 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
+// 岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
+// 此外，你可以假设该网格的四条边均被水包围。
+// 输入：grid = [
+//
+//	["1","1","1","1","0"],
+//	["1","1","0","1","0"],
+//	["1","1","0","0","0"],
+//	["0","0","0","0","0"]
+//
+// ]
+// 输出：1
+// 输入：grid = [
+//
+//	["1","1","0","0","0"],
+//	["1","1","0","0","0"],
+//	["0","0","1","0","0"],
+//	["0","0","0","1","1"]
+//
+// ]
+// 输出：3
+// 提示：
+// m == grid.length
+// n == grid[i].length
+// 1 <= m, n <= 300
+// grid[i][j] 的值为 '0' 或 '1'
+func numIslands(grid [][]byte) int {
+	return 0
 }

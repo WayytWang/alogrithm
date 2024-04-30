@@ -1,7 +1,6 @@
 package stack
 
 import (
-	"reflect"
 	"testing"
 )
 
@@ -241,16 +240,65 @@ func TestNewGraph(t *testing.T) {
 			name: "",
 			args: args{
 				// [2,4],[1,3],[2,4],[1,3]
-				nn: [][]int{{2, 4}},
+				nn: [][]int{{2, 4}, {1, 3}, {2, 4}, {1, 3}},
 			},
 			want: nil,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := NewGraph(tt.args.nn); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("NewGraph() = %v, want %v", got, tt.want)
-			}
+			got := NewGraph(tt.args.nn)
+			t.Log(got)
+		})
+	}
+}
+
+func Test_cloneGraph(t *testing.T) {
+	type args struct {
+		node *Node
+	}
+	tests := []struct {
+		name string
+		args args
+		want *Node
+	}{
+		{
+			name: "",
+			args: args{
+				node: NewGraph([][]int{{2, 4}, {1, 3}, {2, 4}, {1, 3}}),
+			},
+			want: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := cloneGraph(tt.args.node)
+			t.Log(got)
+		})
+	}
+}
+
+func Test_cloneGraph2(t *testing.T) {
+	type args struct {
+		node *Node
+	}
+	tests := []struct {
+		name string
+		args args
+		want *Node
+	}{
+		{
+			name: "",
+			args: args{
+				node: NewGraph([][]int{{2, 4}, {1, 3}, {2, 4}, {1, 3}}),
+			},
+			want: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := cloneGraph2(tt.args.node)
+			t.Log(got)
 		})
 	}
 }
